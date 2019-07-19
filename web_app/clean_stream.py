@@ -16,6 +16,15 @@ model = Doc2Vec.load('enwiki_dbow/doc2vec.bin')
 
 
 def clean(data):
+    """
+    Cleans the data form the json file and prepares it for the model
+    
+    Parameters: 
+        data (PandasDataFrame): Data from the json file
+    
+    Returns:
+        data (PandasDataFrame): Clean version of the data
+    """
     data['description'] = [BeautifulSoup(text,'html.parser').get_text()\
         .replace('\n',' ').replace('\xa0','').replace("\'re"," are")\
         .replace("\'s"," is") for text in data['description']]
@@ -23,7 +32,8 @@ def clean(data):
         .replace('',0)
     data.previous_payouts = [len(i) for i in data.previous_payouts]
     
-    temp_array = data.apply(lambda row: calc_price_and_tickets(row['ticket_types']),axis=1)
+    temp_array = data.apply(lambda row: calc_price_and_tickets\
+                            (row['ticket_types']),axis=1)
     data['avg_cost']=split_tuple(temp_array, 'avg_cost')
     data['total_tickets']=split_tuple(temp_array, 'total_tickets')
     data.ticket_types = [len(i) for i in data.ticket_types]
@@ -32,24 +42,33 @@ def clean(data):
     data.has_header = data.has_header.fillna(0).astype(int)
     data.listed = data.listed.replace('y',1).replace('n',0)
     data.country = data.country.fillna('NotDefined')
-    data.venue_country = data.venue_country.fillna('NotDefined').replace('','NotDefined')
-    data.venue_state = data.venue_state.fillna('NotDefined').replace('','NotDefined')
-    data.venue_name = data.venue_name.fillna('NotDefined').replace('','NotDefined')
-    data['has_venue_address'] = [1 if x != '' else 0 for x in data.venue_address]
+    data.venue_country = data.venue_country.fillna('NotDefined')\
+    .replace('','NotDefined')
+    data.venue_state = data.venue_state.fillna('NotDefined')\
+    .replace('','NotDefined')
+    data.venue_name = data.venue_name.fillna('NotDefined')\
+    .replace('','NotDefined')
+    data['has_venue_address'] =\
+    [1 if x != '' else 0 for x in data.venue_address]
     data['country_match'] = data['country'] == data['venue_country']
     
     #process time data
-    data = to_datetime(data, ['event_end','event_start', 'event_created', 'event_published'])
-    data['event_duration_days']= data.apply(lambda row: calc_duration(row['event_start'], row['event_end']),axis=1)
-    data['days_to_publish']= data.apply(lambda row: calc_duration(row['event_created'], row['event_published']),axis=1)
-    data['days_until_event']= data.apply(lambda row: calc_duration(row['event_created'], row['event_start']),axis=1)
+    data = to_datetime(data, ['event_end','event_start', 'event_created',
+                              'event_published'])
+    data['event_duration_days']= data.apply\
+    (lambda row: calc_duration(row['event_start'], row['event_end']),axis=1)
+    data['days_to_publish']= data.apply(lambda row: calc_duration\
+        (row['event_created'], row['event_published']),axis=1)
+    data['days_until_event']= data.apply(lambda row: calc_duration\
+        (row['event_created'], row['event_start']),axis=1)
     
     
     kmeans_description = joblib.load('models/kmeans_description_model.sav')
     kmeans_venue_name = joblib.load('models/kmeans_name_model.sav')
     kmeans_name = joblib.load('models/kmeans_venue_name_model.sav')
     
-    data['description'] = list(data['description'].apply(lambda x: vectorize(x)))
+    data['description'] = list(data['description']\
+        .apply(lambda x: vectorize(x)))
     vector= np.stack(data['description'].values)
     data['description'] = kmeans_description.predict(vector)
     
@@ -74,7 +93,8 @@ def clean(data):
                         11: 18,
                         1: 19}
 
-    data['description'] = data.apply(lambda row: sort_description[row['description']],axis=1)
+    data['description'] = data.apply\
+    (lambda row: sort_description[row['description']],axis=1)
     
     data['venue_name'] = list(data['venue_name'].apply(lambda x: vectorize(x)))
     vector= np.stack(data['venue_name'].values)
@@ -102,7 +122,8 @@ def clean(data):
                        10: 19}
 
 
-    data['venue_name'] = data.apply(lambda row: sort_venue_name[row['venue_name']],axis=1)
+    data['venue_name'] = data.apply\
+    (lambda row: sort_venue_name[row['venue_name']],axis=1)
 
     data['name'] = list(data['name'].apply(lambda x: vectorize(x)))
     vector= np.stack(data['name'].values)
@@ -139,8 +160,8 @@ def clean(data):
                'object_id', 'org_desc', 'org_facebook', 'org_name',
                'org_twitter', 'payee_name', 'sale_duration', 'sale_duration2',
                'user_created', 'venue_latitude', 'venue_longitude',
-               'country','venue_country', 'currency', 'venue_address', 'venue_state'],
-              axis=1, inplace=True)
+               'country', 'venue_country', 'currency', 'venue_address',
+               'venue_state'], axis=1, inplace=True)
     return(data)
 
 def calc_duration(event1,event2):

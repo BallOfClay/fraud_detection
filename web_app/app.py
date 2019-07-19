@@ -13,28 +13,40 @@ from clean_stream import clean
 import joblib
 from bs4 import BeautifulSoup
 
+#Turn on scheduler to live steam data in 
 scheduler = BackgroundScheduler()
 scheduler.start()
 
-
+#Initiate flask for web app
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
 def get_page():
-    d = json.loads(requests.get('https://galvanize-case-study-on-fraud.herokuapp.com/data_point').text)
+    """
+    Revieves data from the specified url for prediction
+    
+    Returns:
+        data (PandasDataFrame): 1 row DataFrame from url
+    """
+    d = json.loads(requests.get('URL GOES HERE').text)
     data = pd.DataFrame(columns=list(d.keys()))
     data.loc[0] = list(d.values())
     return(data)
 
-
+#Counter for total of risk types assessed
 low = 0
 med = 0
 high = 0
 scheduler.add_job(get_page, 'interval', seconds=15)
 
+
 @app.route('/')
 def home():
+    """
+    Call functions and model to assess the data recieved and make predidction,
+    renders home.html and counts ammount of each risk recieved.
+    """
     global low
     global med
     global high
@@ -55,9 +67,13 @@ def home():
     name = data.name.values[0]
     venue = data.venue_name.values[0]
     desc = data.description.values[0]
-    clean_desc = BeautifulSoup(desc,'html.parser').get_text().replace('\n',' ').replace('\xa0','').replace("\'re"," are").replace("\'s"," is")
+    clean_desc = BeautifulSoup(desc,'html.parser').get_text()\
+    .replace('\n',' ').replace('\xa0','')\
+    .replace("\'re"," are").replace("\'s"," is")
     
-    return render_template('home.html',perc=perc,risk=risk,name=name,venue=venue,clean_desc=clean_desc,high=high,medium=med,low=low)
+    return render_template('home.html', perc=perc, risk=risk, name=name, 
+                           venue=venue, clean_desc=clean_desc, high=high, 
+                           medium=med,low=low)
 
 
 @app.after_request
