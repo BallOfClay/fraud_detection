@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="20">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 180px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #FEFEFE;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #010101;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #908F8F;
+}
+
+.main {
+  margin-left: 180px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+<head>
+<title>Fraud Detection</title>
+</head>
+<body bgcolor="black">
+<div class="sidenav">
+  <a href="https://www.thesitewizard.com/" target="_blank">About</a><br>
+  <a href="https://www.linkedin.com/in/joseph-tustin/" target="_blank">Contact Joe</a><br>
+  <a href="https://www.linkedin.com/in/johnrherr/" target="_blank">Contact John</a><br>
+  <a href="https://www.linkedin.com/in/sethhillis/" target="_blank">Contact Seth</a><br>
+</div>
+<div class="main">
+<center><h1><font color="white"> Fraud Detector </fonts></h1></center>
+<center><h3><font color="white"> High Risk of Fraud </font></h3></center><br>
+<br><center><h1><font color="white"> Previous Detections: </font></h1></center>
+<center><h3><font color="white"> Low Risk: {{low}}	|	Medium Risk: {{medium}} 	|	High Risk: {{high}} </font></h3></center><br>
+<br><center><h1><font color="white"> Based on This Data </font></h1></center><br>
+<center><p><font color="white"> {{data.values}} </font></p></center><br>
+</body>
+
