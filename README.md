@@ -100,12 +100,14 @@ We ultimately chose random forest as we thought that it would give us more flexi
 ## Results: <a name="Results"></a>
 
 **Table 1**: Modeling Score Metrics For Random Forest Classifier
-|  |precision  |  recall | f1-score  | support |
-|--|---:|-----------:|:-----------------------|----:|
-|0    |   1.00   |   0.98   |   0.99   |   2608 |
-|1    |   0.82    |  0.99   |   0.89    |   258  |
+  |precision  |  recall | f1-score  | support 
+:-----:|:-----:|:-----:|:-----:|:-----:
+0    |   1.00   |   0.98   |   0.99   |   2608 
+1    |   0.82    |  0.99   |   0.89    |   258  
+
 
    accuracy                           0.98      
+
 ![](img/confusion_matrix.png)
 
 
@@ -124,4 +126,4 @@ Scoring Results: Metrics
 
 ## Big Finish: <a name="LinktoFlaskApp"></a>
 Model and training data are stored on AWS EC2/S3 instance.  Flask app was developed to evaluate new data versus trained data.
-Link to Flask App: [Our Flask App]('http://my-project.me')
+Link to Flask App: [Our Flask App](http://my-project.me)
