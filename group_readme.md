@@ -108,18 +108,12 @@ Scoring Results: Metrics
 - Recall(TPR): TP / (TP + FN)  "lower recall, more lost money"
 - F1: 2 * PPV * TPR / (PPV + TPR)  "averaging effect"
 
-![](img/mat_fact.png)
-
-
-
-
 
 ## Code Review: <a name="CodeReview"></a>
 
-1. Data Cleaning Code: link to data cleaning
-2. Code for Model: link to model
-3. Code for Test results: link to testing
+1. Code for Web App: [](web_app/app.py)
+2. Code for html file: [](web_app/templates/home.html)
 
 ## Big Finish: <a name="LinktoFlaskApp"></a>
 Model and training data are stored on AWS EC2/S3 instance.  Flask app was developed to evaluate new data versus trained data.
-Link to Flask App: link to flask app  (Courtesy of Seth Hillis)
+Link to Flask App: [Our Flask App](my-project.me) app (Courtesy of Seth Hillis)
