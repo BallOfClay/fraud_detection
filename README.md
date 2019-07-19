@@ -96,10 +96,10 @@ We ultimately chose random forest as we thought that it would give us more flexi
 
 **Table 1**: Modeling Score Metrics For Random Forest Classifier
    
-|precision|recall|f1-score|support|
-|---------|------|--------|-------|
-0 | 1.00 | .98 | .99 | 2608 |
-1 | .82 | .99 | .89 | 258 |
+|label|precision|recall|f1-score|support|
+|-----|---------|------|--------|-------|
+| 0 | 1.00 | .98 | .99 | 2608 |
+| 1 | .82 | .99 | .89 | 258 |
 
    accuracy                           0.98
    
