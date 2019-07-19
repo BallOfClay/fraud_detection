@@ -11,6 +11,7 @@ from flask import Flask, render_template
 from apscheduler.schedulers.background import BackgroundScheduler
 from clean_stream import clean
 import joblib
+from bs4 import BeautifulSoup
 
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -30,7 +31,7 @@ def get_page():
 low = 0
 med = 0
 high = 0
-scheduler.add_job(get_page, 'interval', seconds=20)
+scheduler.add_job(get_page, 'interval', seconds=15)
 
 @app.route('/')
 def home():
@@ -38,9 +39,10 @@ def home():
     global med
     global high
     data = get_page()
-    clean_data = clean(data.copy())
+    data_clean = clean(data.copy())
     model = joblib.load('models/rf_model.sav')
-    prob = model.predict_proba(clean_data)[0][1]
+    prob = model.predict_proba(data_clean)[0][1]
+    perc = round(prob*100,2)
     if prob <= .3:
         low += 1
         risk = 'Low'
@@ -50,7 +52,12 @@ def home():
     else:
         high += 1
         risk = 'High'
-    return render_template('home.html',risk=risk,data=data,high=high,medium=med,low=low)
+    name = data.name.values[0]
+    venue = data.venue_name.values[0]
+    desc = data.description.values[0]
+    clean_desc = BeautifulSoup(desc,'html.parser').get_text().replace('\n',' ').replace('\xa0','').replace("\'re"," are").replace("\'s"," is")
+    
+    return render_template('home.html',perc=perc,risk=risk,name=name,venue=venue,clean_desc=clean_desc,high=high,medium=med,low=low)
 
 
 @app.after_request

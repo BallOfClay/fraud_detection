@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="20">
+<meta http-equiv="refresh" content="15">
 <style>
 body {
   font-family: "Lato", sans-serif;
@@ -53,10 +53,15 @@ body {
 </div>
 <div class="main">
 <center><h1><font color="white"> Fraud Detector </fonts></h1></center>
-<center><h3><font color="white"> {{risk}} Risk of Fraud </font></h3></center><br>
+<center><h3><font color="white">Chance of Fraud {{perc}} % | You Are at {{risk}} Risk of Fraud </font></h3></center><br>
 <br><center><h1><font color="white"> Previous Detections: </font></h1></center>
 <center><h3><font color="white"> Low Risk: {{low}}	|	Medium Risk: {{medium}} 	|	High Risk: {{high}} </font></h3></center><br>
-<br><center><h1><font color="white"> Based on This Data </font></h1></center><br>
-<center><p><font color="white"> {{data.values}} </font></p></center><br>
+<br><center><h1><font color="white"> Event Details </font></h1></center>
+<center><h3><font color="white"> Event Name: </font></h3></center>
+<center><p><font color="white"> {{name}} </font></p></center>
+<center><h3><font color="white"> Event Venue: </font></h3></center>
+<center><p><font color="white"> {{venue}} </font></p></center>
+<center><h3><font color="white"> Event Description: </font></h3></center>
+<center><p><font color="white"> {{clean_desc}} </font></p></center>
 </body>
 

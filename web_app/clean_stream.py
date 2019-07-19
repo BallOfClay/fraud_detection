@@ -53,13 +53,84 @@ def clean(data):
     vector= np.stack(data['description'].values)
     data['description'] = kmeans_description.predict(vector)
     
+    sort_description = {12: 0,
+                        2: 1,
+                        8: 2,
+                        10: 3,
+                        7: 4,
+                        3: 5,
+                        6: 6,
+                        9: 7,
+                        16: 8,
+                        13: 9,
+                        15: 10,
+                        19: 11,
+                        0: 12,
+                        5: 13,
+                        14: 14,
+                        18: 15,
+                        4: 16,
+                        17: 17,
+                        11: 18,
+                        1: 19}
+
+    data['description'] = data.apply(lambda row: sort_description[row['description']],axis=1)
+    
     data['venue_name'] = list(data['venue_name'].apply(lambda x: vectorize(x)))
     vector= np.stack(data['venue_name'].values)
     data['venue_name'] = kmeans_venue_name.predict(vector)
+    
+    sort_venue_name = {2: 0,
+                       5: 1,
+                       14: 2,
+                       3: 3,
+                       7: 4,
+                       4: 5,
+                       19: 6,
+                       16: 7,
+                       13: 8,
+                       1: 9,
+                       11: 10,
+                       0: 11,
+                       9: 12,
+                       17: 13,
+                       6: 14,
+                       15: 15,
+                       12: 16,
+                       18: 17,
+                       8: 18,
+                       10: 19}
+
+
+    data['venue_name'] = data.apply(lambda row: sort_venue_name[row['venue_name']],axis=1)
 
     data['name'] = list(data['name'].apply(lambda x: vectorize(x)))
     vector= np.stack(data['name'].values)
     data['name'] = kmeans_name.predict(vector)
+    
+    
+    sort_name = {11: 0,
+                 4: 1,
+                 5: 2,
+                 8: 3,
+                 10: 4,
+                 18: 5,
+                 12: 6,
+                 6: 7,
+                 16: 8,
+                 13: 9,
+                 3: 10,
+                 7: 11,
+                 0: 12,
+                 15: 13,
+                 9: 14,
+                 1: 15,
+                 2: 16,
+                 17: 17,
+                 14: 18,
+                 19: 19}
+
+    data['name'] = data.apply(lambda row: sort_name[row['name']],axis=1)
     
     
     data.drop(['num_order', 'num_payouts', 'approx_payout_date',
