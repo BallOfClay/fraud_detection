@@ -9,7 +9,8 @@ import requests
 import pandas as pd
 from flask import Flask, render_template
 from apscheduler.schedulers.background import BackgroundScheduler
-from clean import clean
+from clean_stream import clean
+import joblib
 
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -36,12 +37,20 @@ def home():
     global low
     global med
     global high
-    low += 1
-    med += 1
-    high += 1
     data = get_page()
-    clean(data)
-    return render_template('home.html',data=data,high=high,medium=med,low=low)
+    clean_data = clean(data.copy())
+    model = joblib.load('models/rf_model.sav')
+    prob = model.predict_proba(clean_data)[0][1]
+    if prob <= .3:
+        low += 1
+        risk = 'Low'
+    elif prob <= .6:
+        med += 1
+        risk = 'Medium'
+    else:
+        high += 1
+        risk = 'High'
+    return render_template('home.html',risk=risk,data=data,high=high,medium=med,low=low)
 
 
 @app.after_request
