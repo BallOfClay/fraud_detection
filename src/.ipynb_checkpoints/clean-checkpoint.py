@@ -42,9 +42,9 @@ def clean(data):
     data['not_fraud'] = [1 if not 'fraud' in x else 0 for x in data.acct_type]
 
     #Featurize text fields
-    data = text_to_cluster(data, 'description', 20)
-    data = text_to_cluster(data, 'venue_name', 20)
-    data = text_to_cluster(data, 'name', 20)
+    data, kmeans_description = text_to_cluster(data, 'description', 20)
+    data, kmeans_venue_name = text_to_cluster(data, 'venue_name', 20)
+    data, kmeans_name = text_to_cluster(data, 'name', 20)
 	
     #Drop
     data.drop(['num_order', 'num_payouts', 'approx_payout_date',
@@ -57,7 +57,7 @@ def clean(data):
               axis=1, inplace=True)
     
 
-    return data
+    return data, kmeans_description, kmeans_venue_name, kmeans_name
 
 def calc_duration(event1,event2):
     '''calculates the nubmer of hours between two events
@@ -105,9 +105,11 @@ def text_to_cluster(df, col, num_clusters=8):
     cluster_indx = np.argsort(df2['percent_fraud'])
     sorting_dict ={v:k for k, v in zip(cluster_indx.index, cluster_indx)}
     df[col] = df.apply(lambda row: sorting_dict[row[col]],axis=1)
-    return df
+    return df, kmeans
 
 def calc_price_and_tickets(ticket_type):
+    '''calculate the average price for a ticket
+    '''
     if len(ticket_type)>=1:
         cost=[]
         ticket_avail=[]
