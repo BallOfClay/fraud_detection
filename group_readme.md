@@ -9,12 +9,12 @@
 1. [Data](#Data)
 2. [Scope of Project](#ScopeOfProject)
 3. [Model](#Model)
- - Random Forest vs XGBoost
+  - Random Forest vs XGBoost
 4. [Results](#Results)
 5. [Code Review](#CodeReview)
- - Data Cleaning
- - Model Code
- - Test Results Code
+  - Data Cleaning
+  - Model Code
+  - Test Results Code
 
 6. [Big Finish](#LinktoFlaskApp)
 
@@ -44,25 +44,25 @@ After our EDA, the features that we really wanted to target in our model were:
 7.  Are there org_facebook and org_twitter numbers unique to fraudulent cases.
 Seth checked this out and we did not observe any meaningful new information from the distribution plots so we left this feature out
 8.  "name":  Go through doc2vec, KMeans Clustering, and Cluster # assignment process  ie - "J. Anthony Brown & Friends Comedy Show"
-9. "venue_name":  Same process as above....
+9. `venue_name`:  Same process as above....
 ie- "Blow The Whistle On Bullying ~ It Matters What...""
-10. ticket types(list with dictionary within): get cost and quantity_total.  Would get suspicious if a ticket cost $1 or $1000.  Would also be suspicious if the quantity total was 5 or 10,000.  
+10. ticket types(list with dictionary): get cost and quantity_total.  Would get suspicious if a ticket cost $1 or $1000.  Would also be suspicious if the quantity total was 5 or 10,000.  
 
 ## Scope of the Project: <a name="ScopeOfProject"></a>
 - Feature Engineering: Thurs am
- - Group Discussion
- - Data Cleaning: Seth
- - Doc2Vec: John
- - Markdown file: Joe
+  - Group Discussion
+  - Data Cleaning: Seth
+  - Doc2Vec: John
+  - Markdown file: Joe
 - Modeling: Thurs After
- - Group Discussion
- - Choice: RandomForest
- - Made use of: Bootstrapping, Bagging, and Ensemble
- - Ran Model on AWS
+  - Group Discussion
+  - Choice: RandomForest
+  - Made use of: Bootstrapping, Bagging, and Ensemble
+  - Ran Model on AWS
 - Slight Intermission to Perfect Plan
-     - Seth had to reinstall his Linux on his partitioned hard-drive
-     - John had to pip uninstall and reinstall various python libraries
-     - Joe had to fix github merge request issues and update pandas library to work with .pkl files
+  - Seth had to reinstall his Linux on his partitioned hard-drive
+  - John had to pip uninstall and reinstall various python libraries
+  - Joe had to fix github merge request issues and update pandas library to work with .pkl files
 -Flask App: Fri Morning
   - Flask app up and running: Seth
   - Model Review and Final Featurized Dataset: John and Joe
@@ -80,10 +80,19 @@ Random Forests are much easier to tune than Gradient Boosted Machines. There are
 
 We ultimately chose random forest as we thought that it would give us more flexibility. It would be easier to not overfit, and hence, it would give us a lower test error. Plus, it is easier to train.
 
+![](img/20_clusters_description_count.png)
+![](img/20_clusters_description_percent.png)
+
+
+
+
+
+
+
 
 ## Results: <a name="Results"></a>
-Confusion matrix.
-Accuracy, Precision, Recall, ... table
+![](img/confusion_matrix.png)
+
 
 Scoring Results: Metrics
 - Accuracy: Number of cases right( both positive and negative class)/total cases
