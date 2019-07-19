@@ -35,15 +35,15 @@ In this dataset, there are 16,037 cases or rows of which 1,293 cases (roughly 8%
       dtype='object')
 
 After our EDA, the features that we really wanted to target in our model were:
-1. "country":  Country of Origin for Account
-2. "description":  Text string with lots of descriptive words which can be featurized using doc2vec.  Next, we cluster these vectors and assign the cluster number to a feature.
-3. "time_differential" columns could be important.  We did this unpacking with "days till event", "days to publish", "event duration in days". Would expect most events to happen within two month time period
-4. "previous_payouts":  If they have had previous payouts, they are probably a reputable organization.
-5.  "venue_country":  Does it match country of origin?
-6.  "sale_duration":  most events should happen within one to two months of the posting.
+1. `country`:  Country of Origin for Account
+2. `description`:  Text string with lots of descriptive words which can be featurized using doc2vec.  Next, we cluster these vectors and assign the cluster number to a feature.
+3. `time_differential` columns could be important.  We did this unpacking with `days till event`, `days to publish`, `event duration in days`. Would expect most events to happen within two month time period
+4. `previous_payouts`:  If they have had previous payouts, they are probably a reputable organization.
+5.  `venue_country`:  Does it match country of origin?
+6.  `sale_duration`:  most events should happen within one to two months of the posting.
 7.  Are there org_facebook and org_twitter numbers unique to fraudulent cases.
 Seth checked this out and we did not observe any meaningful new information from the distribution plots so we left this feature out
-8.  "name":  Go through doc2vec, KMeans Clustering, and Cluster # assignment process  ie - "J. Anthony Brown & Friends Comedy Show"
+8.  `name`:  Go through doc2vec, KMeans Clustering, and Cluster # assignment process  ie - "J. Anthony Brown & Friends Comedy Show"
 9. `venue_name`:  Same process as above....
 ie- "Blow The Whistle On Bullying ~ It Matters What...""
 10. ticket types(list with dictionary): get cost and quantity_total.  Would get suspicious if a ticket cost $1 or $1000.  Would also be suspicious if the quantity total was 5 or 10,000.  
@@ -63,11 +63,11 @@ ie- "Blow The Whistle On Bullying ~ It Matters What...""
   - Seth had to reinstall his Linux on his partitioned hard-drive
   - John had to pip uninstall and reinstall various python libraries
   - Joe had to fix github merge request issues and update pandas library to work with .pkl files
--Flask App: Fri Morning
+- Flask App: Fri Morning
   - Flask app up and running: Seth
   - Model Review and Final Featurized Dataset: John and Joe
   - Start of Documentation and Code Review: all
--Code Review and Presentation Prep: Fri aft
+- Code Review and Presentation Prep: Fri aft
 
 ## Model: <a name="Model"></a>
 We chose to use a Random Forest Model, but were intrigued with the Gradient Boosted Models as well.
@@ -91,6 +91,14 @@ We ultimately chose random forest as we thought that it would give us more flexi
 
 
 ## Results: <a name="Results"></a>
+
+**Table 1**: Modeling Score Metrics For Random Forest Classifier
+|  |precision  |  recall | f1-score  | support |
+|--|---:|-----------:|:-----------------------|----:|
+|0    |   1.00   |   0.98   |   0.99   |   2608 |
+|1    |   0.82    |  0.99   |   0.89    |   258  |
+
+   accuracy                           0.98      
 ![](img/confusion_matrix.png)
 
 
@@ -103,22 +111,7 @@ Scoring Results: Metrics
 ![](img/mat_fact.png)
 
 
-**Table 1**: Modeling Methods and results
 
-| Movielens(100k)	| RMSE |	MAE	| Time |
-|---:|-----------:|:-----------------------|----:|
-|MeanOfMeans|1.0173|0.837|0:00:03|
-|SVD|	0.934	|0.737|	0:00:11|
-|SVD++|	0.92|	0.722|	0:09:03|
-|NMF	|0.963|	0.758	|0:00:15|
-|Slope One|	0.946|	0.743	|0:00:08|
-|k-NN|	0.98|	0.774	|0:00:10|
-|Centered k-NN	|0.951|	0.749	|0:00:10|
-|k-NN Baseline	|0.931|	0.733|	0:00:12|
-|Co-Clustering	|0.963|	0.753|	0:00:03|
-|Baseline|	0.944|	0.748	|0:00:01|
-|Random	|1.514|	1.215	|0:00:01|
-|ALS| 0.896|0.696| 0:00:04|
 
 
 ## Code Review: <a name="CodeReview"></a>
