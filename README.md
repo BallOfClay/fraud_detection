@@ -9,13 +9,8 @@
 1. [Scope of Project](#ScopeOfProject)
 2. [Data](#Data)
 3. [Model](#Model)
-  - Random Forest vs XGBoost
 4. [Results](#Results)
 5. [Code Review](#CodeReview)
-  - Data Cleaning
-  - Model Code
-  - Test Results Code
-
 6. [Big Finish](#LinktoFlaskApp)
 
 ## Scope of the Project: <a name="ScopeOfProject"></a>
@@ -100,13 +95,14 @@ We ultimately chose random forest as we thought that it would give us more flexi
 ## Results: <a name="Results"></a>
 
 **Table 1**: Modeling Score Metrics For Random Forest Classifier
-  |precision  |  recall | f1-score  | support 
-:-----:|:-----:|:-----:|:-----:|:-----:
-0    |   1.00   |   0.98   |   0.99   |   2608 
-1    |   0.82    |  0.99   |   0.89    |   258  
+   
+|precision|recall|f1-score|support|
+|---------|------|--------|-------|
+0 | 1.00 | .98 | .99 | 2608 |
+1 | .82 | .99 | .89 | 258 |
 
-
-   accuracy                           0.98      
+   accuracy                           0.98
+   
 
 ![](img/confusion_matrix.png)
 
